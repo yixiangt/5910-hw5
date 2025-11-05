@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.BitSet;
 
 public class WordRecommender {
 
@@ -36,6 +37,34 @@ public class WordRecommender {
             j--;
         } while (i >= 0 && j >= 0);
         return count;
+    }
+
+    private double getCommonCharPercent(String a, String b) {
+        BitSet aSet = new BitSet(26);
+        BitSet bSet = new BitSet(26);
+
+        for (int i = 0; i < a.length(); i++) {
+            char c = a.charAt(i);
+            if (Character.isLowerCase(c)) {
+                aSet.set(c - 'a');
+            }
+        }
+
+        for (int i = 0; i < b.length(); i++) {
+            char c = b.charAt(i);
+            if (Character.isLowerCase(c)) {
+                bSet.set(c - 'a');
+            }
+        }
+
+        BitSet intersect = (BitSet) aSet.clone();
+        intersect.and(bSet);
+        BitSet union = (BitSet) aSet.clone();
+        union.or(bSet);
+        int interCount = intersect.cardinality();
+        int unionCount = union.cardinality();
+
+        return unionCount == 0 ? 0.0 : (double) interCount / unionCount;
     }
     // You can of course write other methods as well.
   }
