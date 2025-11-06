@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class SpellChecker {
@@ -13,6 +14,12 @@ public class SpellChecker {
       // TODO: Complete the body of this method, as necessary.
       inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
-  
+
+    private boolean fileExists(String filename) {
+        File f = new File(filename);
+        return f.exists() && f.isFile();
+    }
+
+
     // You can of course write other methods as well.
   }
