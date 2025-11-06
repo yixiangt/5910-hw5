@@ -1,6 +1,9 @@
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class SpellChecker {
     // Use this field everytime you need to read user input
@@ -24,6 +27,8 @@ public class SpellChecker {
         }
         System.out.printf(Util.FILE_SUCCESS_NOTIFICATION, inputFilename, outputFilename);
 
+        ArrayList<String> words = getWords(inputFilename);
+        ArrayList<String> fixed = new ArrayList<>();
 
         inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
@@ -43,6 +48,25 @@ public class SpellChecker {
     private boolean fileExists(String filename) {
         File f = new File(filename);
         return f.exists() && f.isFile();
+    }
+
+    private ArrayList<String> getWords(String filename) {
+        ArrayList<String> words = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+                String[] parts = line.split("\\s+");
+                for (String p : parts) {
+                    if (!p.isEmpty()){
+                        words.add(p);
+                    }
+                }
+            }
+        } catch (IOException e) {
+        }
+        return words;
     }
 
     private String handleMisspelled(String word) {
