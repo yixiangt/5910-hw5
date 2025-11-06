@@ -66,7 +66,7 @@ public class WordRecommender {
         return (left + right) / 2.0;
     }
 
-    private int leftSimilarity(String a, String b) {
+    public int leftSimilarity(String a, String b) {
         int n = Math.min(a.length(), b.length());
         int count = 0;
         for (int i = 0; i < n; i++) {
@@ -75,7 +75,7 @@ public class WordRecommender {
         return count;
     }
 
-    private int rightSimilarity(String a, String b) {
+    public int rightSimilarity(String a, String b) {
         int i = a.length() - 1;
         int j = b.length() - 1;
         int count = 0;
@@ -87,7 +87,7 @@ public class WordRecommender {
         return count;
     }
 
-    private double getCommonCharPercent(String a, String b) {
+    public double getCommonCharPercent(String a, String b) {
         BitSet aSet = new BitSet(26);
         BitSet bSet = new BitSet(26);
 
