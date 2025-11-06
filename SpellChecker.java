@@ -13,9 +13,15 @@ public class SpellChecker {
   
     public void start() {
       // TODO: Complete the body of this method, as necessary.
-        String dictFile = getValidFilename(Util.DICTIONARY_PROMPT);
-        recommender = new WordRecommender(dictFile);
-        System.out.printf(Util.DICTIONARY_SUCCESS_NOTIFICATION, dictFile);
+        String dictFilename = getValidFilename(Util.DICTIONARY_PROMPT);
+        recommender = new WordRecommender(dictFilename);
+        System.out.printf(Util.DICTIONARY_SUCCESS_NOTIFICATION, dictFilename);
+        String inputFilename = getValidFilename(Util.FILENAME_PROMPT);
+        String outputFilename = inputFilename.replace(".txt", "_chk.txt");
+        if (!outputFilename.endsWith("_chk.txt")) {
+            outputFilename = inputFilename + "_chk.txt";
+        }
+        System.out.printf(Util.FILE_SUCCESS_NOTIFICATION, inputFilename, outputFilename);
 
         inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
@@ -35,7 +41,6 @@ public class SpellChecker {
         File f = new File(filename);
         return f.exists() && f.isFile();
     }
-
 
 
     // You can of course write other methods as well.
