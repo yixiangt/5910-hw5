@@ -15,7 +15,9 @@ public class SpellChecker {
       // TODO: Complete the body of this method, as necessary.
         String dictFile = getValidFilename(Util.DICTIONARY_PROMPT);
         recommender = new WordRecommender(dictFile);
-      inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
+        System.out.printf(Util.DICTIONARY_SUCCESS_NOTIFICATION, dictFile);
+
+        inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
 
     private String getValidFilename(String prompt) {
