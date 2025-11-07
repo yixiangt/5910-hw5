@@ -71,8 +71,8 @@ public class SpellChecker {
 
         if (suggestions.isEmpty()) {
             System.out.printf(Util.NO_SUGGESTIONS);
+            System.out.printf(Util.TWO_OPTION_PROMPT);
             while (true) {
-                System.out.printf(Util.TWO_OPTION_PROMPT);
                 userChoice = inputReader.nextLine().trim().toLowerCase();
                 if (userChoice.equals("a")) {
                     return word;
@@ -89,8 +89,8 @@ public class SpellChecker {
             for (int i = 0; i < suggestions.size(); i++) {
                 System.out.printf(Util.SUGGESTION_ENTRY, i + 1, suggestions.get(i));
             }
+            System.out.printf(Util.THREE_OPTION_PROMPT);
             while (true) {
-                System.out.printf(Util.THREE_OPTION_PROMPT);
                 userChoice = inputReader.nextLine().trim().toLowerCase();
                 if (userChoice.equals("r")) {
                     while (true) {
