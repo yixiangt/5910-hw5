@@ -1,9 +1,6 @@
-import java.io.File;
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class SpellChecker {
     // Use this field everytime you need to read user input
@@ -12,11 +9,9 @@ public class SpellChecker {
 
     public SpellChecker() {
       inputReader = new Scanner(System.in); // DO NOT MODIFY - must be included in this method
-      // TODO: Complete the body of this constructor, as necessary.
     }
   
     public void start() {
-      // TODO: Complete the body of this method, as necessary.
         String dictFilename = getValidFilename(Util.DICTIONARY_PROMPT);
         recommender = new WordRecommender(dictFilename);
         System.out.printf(Util.DICTIONARY_SUCCESS_NOTIFICATION, dictFilename);
@@ -28,11 +23,10 @@ public class SpellChecker {
         System.out.printf(Util.FILE_SUCCESS_NOTIFICATION, inputFilename, outputFilename);
 
         ArrayList<String> words = getWords(inputFilename);
-        ArrayList<String> fixed = new ArrayList<>();
+        checkFile(words, outputFilename);
 
         inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
-
 
     private String getValidFilename(String prompt) {
         while (true) {
@@ -64,7 +58,7 @@ public class SpellChecker {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return words;
     }
@@ -72,8 +66,8 @@ public class SpellChecker {
     private String handleMisspelled(String word) {
         System.out.printf(Util.MISSPELL_NOTIFICATION, word);
         ArrayList<String> suggestions = recommender.getWordSuggestions(word, 2, 0.5, 4);
-        String userChoice = "";
-        String replacement = word;
+        String userChoice;
+        String replacement;
 
         if (suggestions.isEmpty()) {
             System.out.printf(Util.NO_SUGGESTIONS);
@@ -121,6 +115,24 @@ public class SpellChecker {
                     System.out.printf(Util.INVALID_RESPONSE);
                 }
             }
+        }
+    }
+    private void checkFile(ArrayList<String> words, String outputFile) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
+            boolean first = true;
+            for (String w : words) {
+                String newOut;
+                if (recommender.isInDictionary(w)) {
+                    newOut = w;
+                } else {
+                    newOut = handleMisspelled(w);
+                }
+                if (!first) bw.write(" ");
+                bw.write(newOut);
+                first = false;
+            }
+            bw.newLine();
+        } catch (IOException ignored) {
         }
     }
     // You can of course write other methods as well.
