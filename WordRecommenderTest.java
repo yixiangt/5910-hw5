@@ -46,21 +46,21 @@ public class WordRecommenderTest {
     @Test
     public void testRightSimilarityFullOverlap() {
         WordRecommender wr = new WordRecommender("engDictionary.txt");
-        double r = wr.leftSimilarity("apple", "apple");
+        double r = wr.rightSimilarity("apple", "apple");
         assertEquals(5, r);
     }
 
     @Test
     public void testRightSimilarityPartialOverlap() {
         WordRecommender wr = new WordRecommender("engDictionary.txt");
-        double r = wr.leftSimilarity("apple", "eye");
+        double r = wr.rightSimilarity("apple", "eye");
         assertEquals(1, r);
     }
 
     @Test
     public void testRightSimilarityNoOverlap() {
         WordRecommender wr = new WordRecommender("engDictionary.txt");
-        double r = wr.leftSimilarity("apple", "yes");
+        double r = wr.rightSimilarity("apple", "yes");
         assertEquals(0, r);
     }
 
