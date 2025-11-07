@@ -8,7 +8,7 @@ public class SpellChecker {
     private WordRecommender recommender;
 
     public SpellChecker() {
-      inputReader = new Scanner(System.in); // DO NOT MODIFY - must be included in this method
+        inputReader = new Scanner(System.in); // DO NOT MODIFY - must be included in this method
     }
   
     public void start() {
@@ -23,7 +23,7 @@ public class SpellChecker {
         System.out.printf(Util.FILE_SUCCESS_NOTIFICATION, inputFilename, outputFilename);
 
         ArrayList<String> words = getWords(inputFilename);
-        checkFile(words, outputFilename);
+        writeCheckedFile(words, outputFilename);
 
         inputReader.close();  // DO NOT MODIFY - must be the last line of this method!
     }
@@ -117,7 +117,7 @@ public class SpellChecker {
             }
         }
     }
-    private void checkFile(ArrayList<String> words, String outputFile) {
+    private void writeCheckedFile(ArrayList<String> words, String outputFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
             boolean first = true;
             for (String w : words) {
