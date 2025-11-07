@@ -48,8 +48,8 @@ public class WordRecommender {
                 best.add(pos, candidate);
                 scores.add(pos, sim);
                 if (best.size() > topN) {
-                    best.removeLast();
-                    scores.removeLast();
+                    best.remove(best.size() - 1);
+                    scores.remove(scores.size() - 1);
                 }
             }
         }

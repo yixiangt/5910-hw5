@@ -41,6 +41,24 @@ public class WordRecommenderTest {
         assertEquals(0, l);
     }
 
+    @Test
+    public void testLeftSimilarityLeftEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.leftSimilarity("", "apple"));
+    }
+
+    @Test
+    public void testLeftSimilarityRightEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.leftSimilarity("apple", ""));
+    }
+
+    @Test
+    public void testLeftSimilarityEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.leftSimilarity("", ""));
+    }
+
     // rightSimilarity
 
     @Test
@@ -64,6 +82,24 @@ public class WordRecommenderTest {
         assertEquals(0, r);
     }
 
+    @Test
+    public void testRightSimilarityLeftEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.rightSimilarity("", "apple"));
+    }
+
+    @Test
+    public void testRightSimilarityRightEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.rightSimilarity("apple", ""));
+    }
+
+    @Test
+    public void testRightSimilarityEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        assertEquals(0, wr.rightSimilarity("", ""));
+    }
+
     // getCommonCharPercent
 
     @Test
@@ -84,6 +120,13 @@ public class WordRecommenderTest {
     public void testCommonCharPercentNoOverlap() {
         WordRecommender wr = new WordRecommender("engDictionary.txt");
         double w = wr.getCommonCharPercent("aardvark", "test");
+        assertEquals(0.0, w, 1e-9);
+    }
+
+    @Test
+    public void testCommonCharPercentEmpty() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        double w = wr.getCommonCharPercent("", "");
         assertEquals(0.0, w, 1e-9);
     }
 
@@ -131,6 +174,33 @@ public class WordRecommenderTest {
         WordRecommender wr = new WordRecommender("engDictionary.txt");
         ArrayList<String> res = wr.getWordSuggestions("sleepyyyyyyyyyyyyyyyy", 2, 0.5, 4);
         assertTrue(res.isEmpty());
+    }
+
+    @Test
+    public void testGetWordSuggestionsOrder() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        ArrayList<String> res = wr.getWordSuggestions("bag", 2, 0.5, 4);
+        int indexBar = res.indexOf("bar");
+        int indexBat = res.indexOf("bat");
+        if (indexBar >= 0 && indexBat >= 0) {
+            assertTrue(indexBar < indexBat);
+        }
+    }
+
+    @Test
+    public void testGetWordSuggestionsToleranceFilter() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        ArrayList<String> res = wr.getWordSuggestions("a", 0, 0.0, 4);
+        for (String s : res) {
+            assertEquals(1, s.length());
+        }
+    }
+
+    @Test
+    public void testGetWordSuggestionsCommonPercentFilter() {
+        WordRecommender wr = new WordRecommender("engDictionary.txt");
+        ArrayList<String> res = wr.getWordSuggestions("appleapple", 10, 1.0, 4);
+        assertTrue(res.contains("apple"));
     }
 
     // constructor
